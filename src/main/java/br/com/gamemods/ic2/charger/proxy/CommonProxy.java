@@ -56,11 +56,25 @@ public class CommonProxy
                     ItemStack recipeOutput = advRecipe.getRecipeOutput();
                     if(recipeOutput.getItem() == Ic2Items.batBox.getItem())
                     {
+                        damage:
                         switch (recipeOutput.getItemDamage())
                         {
                             case 0:case 1:case 2:case 7:
                                 if(replace)
+                                {
+                                    int newDamage;
+                                    switch (recipeOutput.getItemDamage())
+                                    {
+                                        case 0: newDamage = 0; break;
+                                        case 7: newDamage = 1; break;
+                                        case 1: newDamage = 2; break;
+                                        case 2: newDamage = 3; break;
+                                        default: break damage;
+                                    }
+
                                     recipeOutput.func_150996_a(Item.getItemFromBlock(blockCharger));
+                                    recipeOutput.setItemDamage(newDamage);
+                                }
                             break;
                         }
                     }
