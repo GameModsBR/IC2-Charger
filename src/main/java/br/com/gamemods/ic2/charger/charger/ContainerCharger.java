@@ -58,7 +58,18 @@ public class ContainerCharger extends Container
             {
                 try
                 {
-                    if (!this.mergeItemStack(stackInSlot, 0, 4, true) && !this.mergeItemStack(stackInSlot, size, 42, true))
+                    boolean found = false;
+                    for(int i = 0; i < 4; i++)
+                    {
+                        SlotArmor armor = (SlotArmor) inventorySlots.get(i);
+                        if(armor.isItemValid(stackInSlot) && mergeItemStack(stackInSlot, i, i+1, true))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found && !this.mergeItemStack(stackInSlot, size, 42, true))
                         return null;
                 }
                 catch (Exception e)
