@@ -1,0 +1,16 @@
+[
+{
+  "modid": "IC2Charger",
+  "name": "IC2 Charger",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["joserobjr"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["IC2"]
+}
+]
