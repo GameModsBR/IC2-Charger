@@ -1,5 +1,7 @@
 package br.com.gamemods.ic2.charger.charger;
 
+import ic2.core.slot.SlotArmor;
+import ic2.core.slot.SlotInvSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -13,7 +15,11 @@ public class ContainerCharger extends Container
     {
         this.tileEntity = charger;
 
+        for(int col = 0; col < 4; col++)
+            addSlotToContainer(new SlotArmor(inventoryPlayer, col, 8 + col * 18, 84));
 
+        addSlotToContainer(new SlotInvSlot(tileEntity.chargeSlot, 0, 56, 17));
+        addSlotToContainer(new SlotInvSlot(tileEntity.dischargeSlot, 0, 56, 53));
 
         bindPlayerInventory(inventoryPlayer);
     }
