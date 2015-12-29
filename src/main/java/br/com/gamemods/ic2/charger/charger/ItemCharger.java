@@ -9,6 +9,7 @@ public class ItemCharger extends ItemBlock
     public ItemCharger(Block block)
     {
         super(block);
+        setHasSubtypes(true);
     }
 
     @Override
@@ -16,7 +17,11 @@ public class ItemCharger extends ItemBlock
     {
         switch (stack.getItemDamage())
         {
-            default: return getUnlocalizedName()+".lv";
+            case 0: return getUnlocalizedName()+".lv";
+            case 1: return getUnlocalizedName()+".mv";
+            case 2: return getUnlocalizedName()+".hv";
+            case 3: return getUnlocalizedName()+".ev";
+            default:return getUnlocalizedName();
         }
     }
 

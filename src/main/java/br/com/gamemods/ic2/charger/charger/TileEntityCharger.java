@@ -7,6 +7,11 @@ import ic2.core.block.TileEntityInventory;
 import ic2.core.block.invslot.InvSlot;
 import ic2.core.block.invslot.InvSlotCharge;
 import ic2.core.block.invslot.InvSlotDischarge;
+import ic2.core.init.MainConfig;
+import ic2.core.util.ConfigUtil;
+import ic2.core.util.StackUtil;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -126,6 +131,24 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         float ret = (float)this.energy / (float)this.maxStorage;
         if(ret > 1.0F)
             ret = 1.0F;
+
+        return ret;
+    }
+
+    @Override
+    public ItemStack getWrenchDrop(EntityPlayer entityPlayer)
+    {
+        ItemStack ret = super.getWrenchDrop(entityPlayer);
+        float energyRetainedInStorageBlockDrops = ConfigUtil.getFloat(MainConfig.get(), "balance/energyRetainedInStorageBlockDrops");
+        if(energyRetainedInStorageBlockDrops > 0.0F)
+        {
+            double energyRetained = energy * energyRetainedInStorageBlockDrops;
+            if(energyRetained <= 0)
+                return ret;
+
+            NBTTagCompound nbttagcompound = StackUtil.getOrCreateNbtData(ret);
+            nbttagcompound.setDouble("energy", this.energy * energyRetainedInStorageBlockDrops);
+        }
 
         return ret;
     }
