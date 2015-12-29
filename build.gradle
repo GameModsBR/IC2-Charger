@@ -19,6 +19,7 @@ apply plugin: 'forge'
 
 version = "1.0.0"
 group= "br.com.gamemods.ic2.charger"
+//noinspection GroovyUnusedAssignment
 archivesBaseName = "IC2-Charger"
 
 minecraft {

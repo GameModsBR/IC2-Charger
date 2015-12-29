@@ -18,8 +18,8 @@ import java.util.Iterator;
 
 public class CommonProxy
 {
-    public BlockCharger blockCharger;
-    public byte configs;
+    private BlockCharger blockCharger;
+    private byte configs;
 
     public void registerBlocks()
     {

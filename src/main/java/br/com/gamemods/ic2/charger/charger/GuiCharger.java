@@ -11,7 +11,7 @@ public class GuiCharger extends GuiContainer
 {
     private static final ResourceLocation background = new ResourceLocation(IC2.textureDomain, "textures/gui/GUIElectricBlock.png");
     private final TileEntityCharger charger;
-    private String name, armor, level;
+    private final String name, armor, level;
     public GuiCharger(InventoryPlayer inventoryPlayer, TileEntityCharger charger)
     {
         super(new ContainerCharger(inventoryPlayer, charger));

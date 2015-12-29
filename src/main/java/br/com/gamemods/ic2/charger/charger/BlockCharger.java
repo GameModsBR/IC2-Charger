@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class BlockCharger extends BlockContainer
 {
-    private TextureAtlasSprite[][] icons = new TextureAtlasSprite[4][12];
+    private final TextureAtlasSprite[][] icons = new TextureAtlasSprite[4][12];
 
     public BlockCharger()
     {

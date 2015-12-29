@@ -26,13 +26,13 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     public final InvSlotDischarge dischargeSlot;
 
     public double energy;
-    public double maxStorage;
-    public double demand;
+    public final double maxStorage;
+    private double demand;
 
-    public int tier;
-    public int voltage;
+    public final int tier;
+    public final int voltage;
 
-    public TileEntityCharger(int tier, int output, double maxStorage)
+    TileEntityCharger(int tier, int output, double maxStorage)
     {
         this.maxStorage = maxStorage;
         chargeSlot = new InvSlotCharge(this, 0, tier);

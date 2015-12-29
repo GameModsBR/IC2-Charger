@@ -11,9 +11,9 @@ import net.minecraftforge.common.config.Configuration;
     dependencies = "required-after:IC2")
 public class ChargerMod
 {
-    @SidedProxy(clientSide = "br.com.gamemods.ic2.charger.proxy.ClientProxy",
+    @SidedProxy(clientSide = "br.com.gamemods.ic2.charger.proxy.CommonProxy",
                 serverSide = "br.com.gamemods.ic2.charger.proxy.CommonProxy")
-    public static CommonProxy proxy;
+    private static CommonProxy proxy;
 
     @Mod.Instance
     public static ChargerMod instance;

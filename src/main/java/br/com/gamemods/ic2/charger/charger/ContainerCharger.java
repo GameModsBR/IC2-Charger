@@ -10,22 +10,19 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerCharger extends Container
 {
-    private TileEntityCharger tileEntity;
 
     public ContainerCharger(InventoryPlayer inventoryPlayer, TileEntityCharger charger)
     {
-        this.tileEntity = charger;
-
         for(int col = 0; col < 4; col++)
             addSlotToContainer(new SlotArmor(inventoryPlayer, col, 8 + col * 18, 84));
 
-        addSlotToContainer(new SlotInvSlot(tileEntity.chargeSlot, 0, 56, 17));
-        addSlotToContainer(new SlotInvSlot(tileEntity.dischargeSlot, 0, 56, 53));
+        addSlotToContainer(new SlotInvSlot(charger.chargeSlot, 0, 56, 17));
+        addSlotToContainer(new SlotInvSlot(charger.dischargeSlot, 0, 56, 53));
 
         bindPlayerInventory(inventoryPlayer);
     }
 
-    void bindPlayerInventory(InventoryPlayer inventoryPlayer)
+    private void bindPlayerInventory(InventoryPlayer inventoryPlayer)
     {
         int x = 8, y = 114;
         for (int row = 0; row < 3; row++)
