@@ -2,3 +2,4 @@ tile.charger.lv.name=BatBox
 tile.charger.mv.name=CESU
 tile.charger.hv.name=MFE
 tile.charger.ev.name=MFSU
+ic2.charger.max=Max: %d EU/t

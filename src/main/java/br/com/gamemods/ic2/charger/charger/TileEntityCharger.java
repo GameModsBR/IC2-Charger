@@ -24,6 +24,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     public double maxStorage;
 
     public int tier;
+    public int voltage;
 
     public TileEntityCharger(int tier, int output, double maxStorage)
     {
@@ -31,6 +32,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         chargeSlot = new InvSlotCharge(this, 0, tier);
         dischargeSlot = new InvSlotDischarge(this, 1, InvSlot.Access.IO, tier, InvSlot.InvSide.BOTTOM);
         this.tier = tier;
+        voltage = output;
     }
 
     @Override
@@ -58,8 +60,15 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         {
             markDirty();
             if(energyBefore != energy)
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, (int)energy);
         }
+    }
+
+    @Override
+    public boolean receiveClientEvent(int action, int param)
+    {
+        energy = param;
+        return true;
     }
 
     @Override
@@ -95,7 +104,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         if(increment > 0)
         {
             markDirty();
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, (int)energy);
         }
         return amount - increment;
     }
@@ -125,7 +134,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
         super.readFromNBT(nbtTagCompound);
-        this.energy = nbtTagCompound.getDouble("energy");
+        this.energy = Math.min(nbtTagCompound.getDouble("energy"), 0);
     }
 
     @Override
