@@ -21,5 +21,6 @@ public class ChargerMod
     {
         proxy.registerBlocks();
         proxy.registerTiles();
+        proxy.registerNetwork(this);
     }
 }
