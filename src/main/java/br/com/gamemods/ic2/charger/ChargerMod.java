@@ -8,7 +8,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = "IC2Charger", name = "IC2 Charger", version = "1.0.0",
+@Mod(modid = "IC2Charger", name = "IC2 Charger", version = "1.0.1",
     dependencies = "required-after:IC2")
 public class ChargerMod
 {
