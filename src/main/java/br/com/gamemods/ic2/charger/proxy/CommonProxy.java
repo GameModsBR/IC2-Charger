@@ -1,6 +1,7 @@
 package br.com.gamemods.ic2.charger.proxy;
 
 import br.com.gamemods.ic2.charger.charger.BlockCharger;
+import br.com.gamemods.ic2.charger.charger.ItemCharger;
 import br.com.gamemods.ic2.charger.charger.TileEntityChargerLV;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -10,7 +11,7 @@ public class CommonProxy
 
     public void registerBlocks()
     {
-        GameRegistry.registerBlock(blockCharger = new BlockCharger(), "charger");
+        GameRegistry.registerBlock(blockCharger = new BlockCharger(), ItemCharger.class, "charger");
     }
 
     public void registerTiles()
