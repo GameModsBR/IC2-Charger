@@ -27,6 +27,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
 
     public double energy;
     public double maxStorage;
+    public double demand;
 
     public int tier;
     public int voltage;
@@ -38,6 +39,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         dischargeSlot = new InvSlotDischarge(this, 1, InvSlot.Access.IO, tier, InvSlot.InvSide.BOTTOM);
         this.tier = tier;
         voltage = output;
+        demand = maxStorage - energy;
     }
 
     @Override
@@ -67,6 +69,13 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
             if(energyBefore != energy)
                 worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, (int)energy);
         }
+    }
+
+    @Override
+    public void markDirty()
+    {
+        demand = maxStorage - energy;
+        super.markDirty();
     }
 
     @Override
@@ -123,7 +132,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     @Override
     public double getDemandedEnergy()
     {
-        return maxStorage - energy;
+        return demand;
     }
 
     public float getChargeLevel()
