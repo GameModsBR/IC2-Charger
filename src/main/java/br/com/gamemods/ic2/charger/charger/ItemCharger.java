@@ -19,4 +19,10 @@ public class ItemCharger extends ItemBlock
             default: return getUnlocalizedName()+".lv";
         }
     }
+
+    @Override
+    public int getMetadata(int damage)
+    {
+        return damage;
+    }
 }

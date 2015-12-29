@@ -2,18 +2,24 @@ package br.com.gamemods.ic2.charger.charger;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ic2.core.IC2;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.List;
+
 public class BlockCharger extends BlockContainer
 {
-    private TextureAtlasSprite[][] icons = new TextureAtlasSprite[1][12];
+    private TextureAtlasSprite[][] icons = new TextureAtlasSprite[4][12];
 
     public BlockCharger()
     {
@@ -22,6 +28,7 @@ public class BlockCharger extends BlockContainer
         setStepSound(soundTypeMetal);
         setBlockName("charger");
         setBlockTextureName("IC2:blockElectric");
+        setCreativeTab(IC2.tabIC2);
     }
 
     @Override
@@ -29,6 +36,9 @@ public class BlockCharger extends BlockContainer
     {
         switch (meta)
         {
+            case 1: return new TileEntityChargerMV();
+            case 2: return new TileEntityChargerHV();
+            case 3: return new TileEntityChargerEV();
             default: return new TileEntityChargerLV();
         }
     }
@@ -37,7 +47,7 @@ public class BlockCharger extends BlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         TextureMap textureMap = (TextureMap)iconRegister;
-        String[] names = {"ic2:wiring/blockBatBox:"};
+        String[] names = {"BatBox","CESU","MFE","MFSU"};
         for(int ni=0; ni < names.length; ni++)
         {
             String name = names[ni];
@@ -45,9 +55,18 @@ public class BlockCharger extends BlockContainer
                 for(int side = 0; side < 6; side++)
                 {
                     int subIndex = active * 6 + side;
-                    icons[ni][subIndex] = textureMap.getTextureExtry(name+subIndex);
+                    icons[ni][subIndex] = textureMap.getTextureExtry("ic2:wiring/block"+name+":"+subIndex);
                 }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list)
+    {
+        for(int i = 0; i < icons.length; i++)
+            list.add(new ItemStack(item, 1, i));
     }
 
     @Override

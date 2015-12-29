@@ -1,8 +1,6 @@
 package br.com.gamemods.ic2.charger.proxy;
 
-import br.com.gamemods.ic2.charger.charger.BlockCharger;
-import br.com.gamemods.ic2.charger.charger.ItemCharger;
-import br.com.gamemods.ic2.charger.charger.TileEntityChargerLV;
+import br.com.gamemods.ic2.charger.charger.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy
@@ -17,5 +15,8 @@ public class CommonProxy
     public void registerTiles()
     {
         GameRegistry.registerTileEntity(TileEntityChargerLV.class, "ic2charger:LV-Charger");
+        GameRegistry.registerTileEntity(TileEntityChargerMV.class, "ic2charger:MV-Charger");
+        GameRegistry.registerTileEntity(TileEntityChargerHV.class, "ic2charger:HV-Charger");
+        GameRegistry.registerTileEntity(TileEntityChargerEV.class, "ic2charger:EV-Charger");
     }
 }
