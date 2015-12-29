@@ -1,5 +1,7 @@
 package br.com.gamemods.ic2.charger.charger;
 
+import br.com.gamemods.ic2.charger.ChargerMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
@@ -67,7 +69,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         {
             markDirty();
             if(energyBefore != energy)
-                worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, (int)energy);
+                sendEnergyUpdate();
         }
     }
 
@@ -76,13 +78,6 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     {
         demand = maxStorage - energy;
         super.markDirty();
-    }
-
-    @Override
-    public boolean receiveClientEvent(int action, int param)
-    {
-        energy = param;
-        return true;
     }
 
     @Override
@@ -118,9 +113,17 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
         if(increment > 0)
         {
             markDirty();
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, (int)energy);
+            if(!worldObj.isRemote)
+                sendEnergyUpdate();
         }
         return amount - increment;
+    }
+
+    public void sendEnergyUpdate()
+    {
+        ChargerMod.network.sendToAllAround(new ChargerEnergyMessage(this),
+                new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 10)
+        );
     }
 
     @Override

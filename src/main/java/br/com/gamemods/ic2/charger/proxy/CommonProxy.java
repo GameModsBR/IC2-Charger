@@ -5,6 +5,7 @@ import br.com.gamemods.ic2.charger.GuiHandler;
 import br.com.gamemods.ic2.charger.charger.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import ic2.core.AdvRecipe;
 import ic2.core.Ic2Items;
 import net.minecraft.item.Item;
@@ -37,6 +38,8 @@ public class CommonProxy
     public void registerNetwork(ChargerMod mod)
     {
         NetworkRegistry.INSTANCE.registerGuiHandler(mod, new GuiHandler());
+        ChargerMod.network = NetworkRegistry.INSTANCE.newSimpleChannel("ic2charger");
+        ChargerMod.network.registerMessage(ChargerEnergyMessage.class, ChargerEnergyMessage.class, 0, Side.CLIENT);
     }
 
     public void registerRecipes()

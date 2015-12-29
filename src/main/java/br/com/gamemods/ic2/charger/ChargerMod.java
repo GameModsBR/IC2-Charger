@@ -5,6 +5,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.common.config.Configuration;
 
 @Mod(modid = "IC2Charger", name = "IC2 Charger", version = "1.0.0",
@@ -17,6 +18,8 @@ public class ChargerMod
 
     @Mod.Instance
     public static ChargerMod instance;
+
+    public static SimpleNetworkWrapper network;
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event)
