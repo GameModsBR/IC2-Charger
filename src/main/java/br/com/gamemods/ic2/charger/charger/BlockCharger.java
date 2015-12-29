@@ -11,7 +11,6 @@ import ic2.core.util.Util;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,7 +28,8 @@ import java.util.Random;
 
 public class BlockCharger extends BlockContainer
 {
-    private final TextureAtlasSprite[][] icons = new TextureAtlasSprite[4][12];
+    @SideOnly(Side.CLIENT)
+    private IIcon[][] icons;
 
     public BlockCharger()
     {
@@ -142,6 +142,8 @@ public class BlockCharger extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister)
     {
+        icons = new IIcon[4][12];
+
         TextureMap textureMap = (TextureMap)iconRegister;
         String[] names = {"BatBox","CESU","MFE","MFSU"};
         for(int ni=0; ni < names.length; ni++)
