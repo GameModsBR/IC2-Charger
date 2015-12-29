@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class ContainerCharger extends Container
 {
@@ -38,6 +39,72 @@ public class ContainerCharger extends Container
 
         for (int slot = 0; slot < 9; slot++)
             addSlotToContainer(new Slot(inventoryPlayer, slot, x + slot * 18, y + 3*18 + 4));
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot)
+    {
+        int size = 6;
+        ItemStack stack = null;
+        Slot slotObject = (Slot) inventorySlots.get(slot);
+        // null checks and checks if the item can be stacked (maxStackSize > 1)
+        if (slotObject != null && slotObject.getHasStack())
+        {
+            ItemStack stackInSlot = slotObject.getStack();
+            stack = stackInSlot.copy();
+
+            // merges the item into player inventory since its in the tileEntity
+            if (slot < size && slot > 3)
+            {
+                try
+                {
+                    if (!this.mergeItemStack(stackInSlot, 0, 4, true) && !this.mergeItemStack(stackInSlot, size, 42, true))
+                        return null;
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            // places it into the tileEntity is possible since its in the player
+            // inventory
+            else
+            {
+                boolean foundSlot = false;
+                for (int i = 4; i < size; i++)
+                    if (((Slot) inventorySlots.get(i)).isItemValid(stackInSlot)
+                            && this.mergeItemStack(stackInSlot, i, i + 1, false))
+                    {
+                        foundSlot = true;
+                        break;
+                    }
+
+                if(!foundSlot)
+                    for (int i = 0; i < 4; i++)
+                        if (((Slot) inventorySlots.get(i)).isItemValid(stackInSlot)
+                                && this.mergeItemStack(stackInSlot, i, i + 1, false))
+                        {
+                            foundSlot = true;
+                            break;
+                        }
+
+                if (!foundSlot)
+                    return null;
+            }
+
+            if (stackInSlot.stackSize == 0)
+                slotObject.putStack(null);
+            else
+                slotObject.onSlotChanged();
+
+            if (stackInSlot.stackSize == stack.stackSize)
+                return null;
+
+            slotObject.onPickupFromSlot(player, stackInSlot);
+        }
+
+        return stack;
     }
 
     @Override
