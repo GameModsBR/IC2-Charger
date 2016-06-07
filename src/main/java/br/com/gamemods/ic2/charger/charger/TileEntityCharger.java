@@ -169,7 +169,8 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
         super.readFromNBT(nbtTagCompound);
-        this.energy = Math.min(nbtTagCompound.getDouble("energy"), 0);
+        double e = nbtTagCompound.getDouble("energy");
+        energy = (e < 0) ? 0 : e;
     }
 
     @Override
