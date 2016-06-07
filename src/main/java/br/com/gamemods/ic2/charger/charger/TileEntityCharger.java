@@ -57,7 +57,7 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
                 markDirty = true;
         }
 
-        if(!dischargeSlot.isEmpty())
+        if(!dischargeSlot.isEmpty() && energy < maxStorage)
         {
             double increment = dischargeSlot.discharge(maxStorage - energy, false);
             energy += increment;
