@@ -20,12 +20,17 @@ import java.util.Iterator;
 
 public class CommonProxy
 {
+    public ItemStack batBox, cesu, mfe, mfsu;
     private BlockCharger blockCharger;
     private byte configs;
 
     public void registerBlocks()
     {
         GameRegistry.registerBlock(blockCharger = new BlockCharger(), ItemCharger.class, "charger");
+        batBox = new ItemStack(blockCharger);
+        cesu = new ItemStack(blockCharger, 1, 1);
+        mfe = new ItemStack(blockCharger, 1, 2);
+        mfsu = new ItemStack(blockCharger, 1, 3);
     }
 
     public void registerTiles()
