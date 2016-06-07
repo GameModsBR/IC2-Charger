@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
+import ic2.api.tile.IEnergyStorage;
 import ic2.core.block.TileEntityInventory;
 import ic2.core.block.invslot.InvSlot;
 import ic2.core.block.invslot.InvSlotCharge;
@@ -22,7 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class TileEntityCharger extends TileEntityInventory implements IEnergySink
+public abstract class TileEntityCharger extends TileEntityInventory implements IEnergySink, IEnergyStorage
 {
     public final InvSlotCharge chargeSlot;
     public final InvSlotDischarge dischargeSlot;
@@ -78,6 +79,53 @@ public abstract class TileEntityCharger extends TileEntityInventory implements I
     {
         demand = maxStorage - energy;
         super.markDirty();
+    }
+
+    @Override
+    public double getOutputEnergyUnitsPerTick()
+    {
+        return voltage;
+    }
+
+    @Override
+    public int getOutput()
+    {
+        return voltage;
+    }
+
+    @Override
+    public int getStored()
+    {
+        return (int) energy;
+    }
+
+    @Override
+    public int getCapacity()
+    {
+        return (int) maxStorage;
+    }
+
+    @Override
+    public boolean isTeleporterCompatible(ForgeDirection forgeDirection)
+    {
+        return true;
+    }
+
+    @Override
+    public int addEnergy(int amount)
+    {
+        energy += amount;
+        if(!worldObj.isRemote)
+            sendEnergyUpdate();
+        return amount;
+    }
+
+    @Override
+    public void setStored(int amount)
+    {
+        energy = Math.max(0, Math.min(amount, maxStorage));
+        if(!worldObj.isRemote)
+            sendEnergyUpdate();
     }
 
     @Override
