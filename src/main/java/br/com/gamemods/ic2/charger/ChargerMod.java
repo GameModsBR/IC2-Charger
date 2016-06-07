@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = "IC2Charger", name = "IC2 Charger", version = "1.0.1",
+@Mod(modid = "IC2Charger", name = "IC2 Charger", version = "1.0.2",
     dependencies = "required-after:IC2")
 public class ChargerMod
 {
